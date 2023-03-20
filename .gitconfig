@@ -1,0 +1,15 @@
+[user]
+  name = Claudio Cancinos
+  email = ccancinos@users.sourceforge.net
+[push]
+  default = current
+[color]
+  ui = true
+[color "diff"]
+  whitespace = red reverse
+[core]
+  excludesfile = ~/.git_config/.gitignore_global
+  hooksPath = ~/.git_config/hooks
+
+[includeIf "gitdir: ~/Optoro/"]
+  path = ~/.git_config/optoro/.gitconfig
