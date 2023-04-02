@@ -119,26 +119,26 @@ source $ZSH/oh-my-zsh.sh
 
 
 ##################################################################################################
-# ENVIRONMENT SETTINGS
+# WORK SETTINGS
 ##################################################################################################
-# Uncomment the following line to change how often to auto-update (in days).
-# export UPDATE_ZSH_DAYS=13
-ZSH_CUSTOM_AUTOUPDATE_QUIET=true
+# Script with specific commands for Optoro project
+source ~/Optoro/code/environment/dev.sh
 
 # Add Qt to PATH
 export PATH="$PATH:~/Qt5.5.0/5.5/clang_64/bin:/usr/local/sbin"
 export PATH="/usr/local/opt/mysql@5.6/bin:$PATH"
+export PATH="/usr/local/Cellar/kubernetes-cli/1.26.3/bin:$PATH"
 
 alias python3='/usr/bin/python3'
 alias python=python3
 alias pip=pip3
-alias lvim=~/.local/bin/lvim
 
 ## Google Cloud SDK
 # The next line updates PATH for the Google Cloud SDK.
 if [ -f '/Users/ccancinos/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/ccancinos/google-cloud-sdk/path.zsh.inc'; fi
 # The next line enables shell command completion for gcloud.
 if [ -f '/Users/ccancinos/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/ccancinos/google-cloud-sdk/completion.zsh.inc'; fi
+export USE_GKE_GCLOUD_AUTH_PLUGIN=True
 ##/ Google Cloud SDK
 
 # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
@@ -148,48 +148,6 @@ export PATH="$PATH:$HOME/.rvm/bin"
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-
-##################################################################################################
-# PERSONAL STUFF
-##################################################################################################
-# Script with specific commands for Optoro project
-source ~/Optoro/code/environment/dev.sh
-
-# Avoid duplicates in history
-# https://unix.stackexchange.com/questions/599641/why-do-i-have-duplicates-in-my-zsh-history
-setopt HIST_EXPIRE_DUPS_FIRST
-setopt HIST_IGNORE_DUPS
-setopt HIST_IGNORE_ALL_DUPS
-setopt HIST_IGNORE_SPACE
-setopt HIST_FIND_NO_DUPS
-setopt HIST_SAVE_NO_DUPS
-
-alias config='git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
-# https://pastebin.com/raw/UWHMV2QF
-alias reload="source ~/.zshrc"
-alias edit="open -a 'Rubymine 3' $1"
-alias myip="curl http://ipecho.net/plain; echo"
-alias glog="git log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --branches -- $1"
-alias topten="history | commands | sort -rn | head"
-alias usage='du -h -d1'
-alias runp="lsof -i "
-
-commands() {
-  awk '{a[$2]++}END{for(i in a){print a[i] " " i}}'
-}
-
-# Process list using a TPC port
-function port_proc() {
-  lsof -i TCP:${1} | grep LISTEN
-}
-
-# Kills process list using a TCP port
-function port_proc_kill() {
-  lsof -i TCP:${1} | grep LISTEN | awk '{print $2}' | xargs kill -9
-}
-
-# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 # Put this into your $HOME/.zshrc to call nvm use automatically whenever you enter a directory that contains an .nvmrc file with a string telling nvm which node to use
 # place this after nvm initialization!
@@ -223,4 +181,58 @@ load-nvmrc() {
 }
 add-zsh-hook chpwd load-nvmrc
 load-nvmrc
+##################################################################################################
+# WORK SETTINGS
+##################################################################################################
+
+##################################################################################################
+# PERSONAL STUFF
+##################################################################################################
+# Uncomment the following line to change how often to auto-update (in days).
+# export UPDATE_ZSH_DAYS=13
+ZSH_CUSTOM_AUTOUPDATE_QUIET=true
+
+# Avoid duplicates in history
+# https://unix.stackexchange.com/questions/599641/why-do-i-have-duplicates-in-my-zsh-history
+setopt HIST_EXPIRE_DUPS_FIRST
+setopt HIST_IGNORE_DUPS
+setopt HIST_IGNORE_ALL_DUPS
+setopt HIST_IGNORE_SPACE
+setopt HIST_FIND_NO_DUPS
+setopt HIST_SAVE_NO_DUPS
+
+# Handle dotfiles with github
+alias config='git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
+alias lazyconfig='lazygit --git-dir=$HOME/.dotfiles --work-tree=$HOME'
+alias lvim=~/.local/bin/lvim
+# To define lazygit config file's path
+alias lazygit='CONFIG_DIR=~/.config/lazygit lazygit'
+# Some alias taken from https://pastebin.com/raw/UWHMV2QF
+alias reload="source ~/.zshrc"
+alias edit="open -a 'Rubymine 3' $1"
+alias myip="curl http://ipecho.net/plain; echo"
+alias glog="git log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --branches -- $1"
+alias topten="history | commands | sort -rn | head"
+alias usage='du -h -d1'
+alias runp="lsof -i "
+
+commands() {
+  awk '{a[$2]++}END{for(i in a){print a[i] " " i}}'
+}
+
+# Process list using a TPC port
+function port_proc() {
+  lsof -i TCP:${1} | grep LISTEN
+}
+
+# Kills process list using a TCP port
+function port_proc_kill() {
+  lsof -i TCP:${1} | grep LISTEN | awk '{print $2}' | xargs kill -9
+}
+##################################################################################################
+# END PERSONAL STUFF
+##################################################################################################
+
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 

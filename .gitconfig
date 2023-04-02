@@ -11,5 +11,5 @@
   excludesfile = ~/.git_config/.gitignore_global
   hooksPath = ~/.git_config/hooks
 
-[includeIf "gitdir: ~/Optoro/"]
+[includeIf "gitdir:~/Optoro/code/"]
   path = ~/.git_config/optoro/.gitconfig
