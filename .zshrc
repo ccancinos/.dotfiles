@@ -211,11 +211,19 @@ alias lazygit='CONFIG_DIR=~/.config/lazygit lazygit'
 alias reload="source ~/.zshrc"
 alias edit="open -a 'Rubymine 3' $1"
 alias myip="curl http://ipecho.net/plain; echo"
-alias glog="git log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --branches -- $1"
-alias topten="history | commands | sort -rn | head"
 alias usage='du -h -d1'
 alias runp="lsof -i "
 
+alias glog="git log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --branches -- $1"
+alias gbase-branch="git show-branch | grep '*' | grep -v "$(git rev-parse --abbrev-ref HEAD)" | head -n1 | sed 's/.*\[\(.*\)\].*/\1/' | sed 's/[\^~].*//'"
+function gmove() {
+  local newBase=$1
+  local currentBase=$2
+  local branchToMove=$3
+  git rebase --onto ${newBase} ${currentBase} ${branchToMove}
+}
+
+alias topten="history | commands | sort -rn | head"
 commands() {
   awk '{a[$2]++}END{for(i in a){print a[i] " " i}}'
 }
