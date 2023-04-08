@@ -203,27 +203,35 @@ setopt HIST_SAVE_NO_DUPS
 
 # Handle dotfiles with github
 alias config='git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
-alias lazyconfig='lazygit --git-dir=$HOME/.dotfiles --work-tree=$HOME'
-alias lvim=~/.local/bin/lvim
-# To define lazygit config file's path
-alias lazygit='CONFIG_DIR=~/.config/lazygit lazygit'
-# Some alias taken from https://pastebin.com/raw/UWHMV2QF
-alias reload="source ~/.zshrc"
 alias edit="open -a 'Rubymine 3' $1"
-alias myip="curl http://ipecho.net/plain; echo"
-alias usage='du -h -d1'
-alias runp="lsof -i "
-
 alias glog="git log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --branches -- $1"
-alias gbase-branch="git show-branch | grep '*' | grep -v "$(git rev-parse --abbrev-ref HEAD)" | head -n1 | sed 's/.*\[\(.*\)\].*/\1/' | sed 's/[\^~].*//'"
-function gmove() {
+alias gbase-branch=fgbase-branch
+alias gmove=fbmove
+alias lazyconfig='lazygit --git-dir=$HOME/.dotfiles --work-tree=$HOME'
+# Use lazygit with defined config file
+alias lazygit='CONFIG_DIR=~/.config/lazygit lazygit'
+alias lvim=~/.local/bin/lvim
+# Some alias taken from https://pastebin.com/raw/UWHMV2QF
+alias myip="curl http://ipecho.net/plain; echo"
+alias reload="source ~/.zshrc"
+alias runp="lsof -i "
+alias topten="history | commands | sort -rn | head"
+alias usage='du -h -d1'
+
+# Shows base branch from which this branch was created
+function fgbase-branch() {
+  git show-branch | grep '*' | grep -v "$(git rev-parse --abbrev-ref HEAD)" | head -n1 | sed 's/.*\[\(.*\)\].*/\1/' | sed 's/[\^~].*//'
+}
+
+# Move base branch to a new branch
+# Usefull when a branch from main now should extends from an intermediate branch
+function fgmove() {
   local newBase=$1
   local currentBase=$2
   local branchToMove=$3
   git rebase --onto ${newBase} ${currentBase} ${branchToMove}
 }
 
-alias topten="history | commands | sort -rn | head"
 commands() {
   awk '{a[$2]++}END{for(i in a){print a[i] " " i}}'
 }
