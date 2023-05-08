@@ -195,6 +195,9 @@ lvim.builtin.project.active = false
 lvim.builtin.nvimtree.setup.update_cwd = false
 lvim.builtin.nvimtree.setup.update_focused_file.update_cwd = false
 
+-- Ctrl-S on insert mode changes to visual mode and saves
+lvim.keys.insert_mode["<C-s>"] = "<esc>:w<cr>"
+
 vim.opt.number = true
 vim.opt.relativenumber = true
 
@@ -206,3 +209,32 @@ vim.opt.scrolloff = 8
 vim.filetype.add({extension = { es6 = "javascript" }})
 
 lvim.builtin.which_key.mappings['P'] = { "<cmd>Telescope projects<CR>", "Projects" }
+lvim.builtin.which_key.mappings['sw'] = { "<cmd>Telescope grep_string<CR>", "Word" }
+
+-- lvim.plugins = {
+--   { 'christoomey/vim-tmux-navigator' },
+-- }
+
+-- Live Grep and Grep String using default Telescope config layout 
+lvim.builtin.telescope.pickers.live_grep = nil
+lvim.builtin.telescope.pickers.grep_string = nil
+-- lvim.builtin.telescope.pickers.find_files = nil
+lvim.builtin.telescope.pickers.find_files = {
+  hidden = true,
+  path_display = { truncate = 2 }
+}
+lvim.builtin.telescope.pickers.git_files = {
+      theme = "dropdown",
+      hidden = true,
+      previewer = true,
+      show_untracked = true,
+    }
+-- I think this apply for all pickers. It truncates to 4chars all except file name in full path name
+lvim.builtin.telescope.defaults.path_display = {
+  shorten = {
+    len = 4, exclude = {-1},
+  },
+  truncate = true,
+}
+lvim.builtin.telescope.defaults.dynamic_preview_title = true
+

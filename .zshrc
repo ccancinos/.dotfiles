@@ -127,7 +127,7 @@ source ~/Optoro/code/environment/dev.sh
 # Add Qt to PATH
 export PATH="$PATH:~/Qt5.5.0/5.5/clang_64/bin:/usr/local/sbin"
 export PATH="/usr/local/opt/mysql@5.6/bin:$PATH"
-export PATH="/usr/local/Cellar/kubernetes-cli/1.26.3/bin:$PATH"
+export PATH="/usr/local/Cellar/kubernetes-cli/1.27.1/bin:$PATH"
 
 alias python3='/usr/bin/python3'
 alias python=python3

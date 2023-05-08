@@ -8,8 +8,8 @@
 [color "diff"]
   whitespace = red reverse
 [core]
-  excludesfile = ~/.git_config/.gitignore_global
-  hooksPath = ~/.git_config/hooks
+  excludesfile = ~/.config/git/.gitignore_global
+  hooksPath = ~/.config/git/hooks
 
 [includeIf "gitdir:~/Optoro/code/"]
-  path = ~/.git_config/optoro/.gitconfig
+  path = ~/.config/git/optoro/.gitconfig
