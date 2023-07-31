@@ -1,3 +1,9 @@
+-- Read the docs: https://www.lunarvim.org/docs/configuration
+-- Video Tutorials: https://www.youtube.com/watch?v=sFA9kX-Ud_c&list=PLhoH5vyxr6QqGu0i7tt_XoVK9v-KvZ3m6
+-- Forum: https://www.reddit.com/r/lunarvim/
+-- Discord: https://discord.com/invite/Xb9B4Ny
+
+
 --[[
 lvim is the global options object
 
@@ -215,26 +221,44 @@ lvim.builtin.which_key.mappings['sw'] = { "<cmd>Telescope grep_string<CR>", "Wor
 --   { 'christoomey/vim-tmux-navigator' },
 -- }
 
--- Live Grep and Grep String using default Telescope config layout 
-lvim.builtin.telescope.pickers.live_grep = nil
-lvim.builtin.telescope.pickers.grep_string = nil
--- lvim.builtin.telescope.pickers.find_files = nil
-lvim.builtin.telescope.pickers.find_files = {
-  hidden = true,
-  path_display = { truncate = 2 }
-}
-lvim.builtin.telescope.pickers.git_files = {
-      theme = "dropdown",
-      hidden = true,
-      previewer = true,
-      show_untracked = true,
-    }
--- I think this apply for all pickers. It truncates to 4chars all except file name in full path name
-lvim.builtin.telescope.defaults.path_display = {
-  shorten = {
-    len = 4, exclude = {-1},
+lvim.builtin.telescope = {
+  active = true,
+  defaults = {
+    layout_strategy = "horizontal",
+    theme = "dropdown",
+    dynamic_preview_title = true,
+    previewer = true,
+    path_display = {
+      truncate = true,
+      shorten = {
+        len = 4, exclude = {-1},
+      },
+    },
   },
-  truncate = true,
+  pickers = nil,
+  -- pickers = {
+    -- find_files = {
+    --   theme = "dropdown",
+    --   hidden = true,
+    --   previewer = true,
+    --   show_untracked = true,
+    -- },
+    -- git_files = {
+    --   theme = "dropdown",
+    --   hidden = true,
+    --   previewer = true,
+    --   show_untracked = true,
+    -- },
+    -- live_grep = {
+    --   hidden = true,
+    -- },
+  -- },
 }
-lvim.builtin.telescope.defaults.dynamic_preview_title = true
 
+-- Redefine to show preview when pressing <leader>f
+lvim.builtin.which_key.mappings["f"] = {
+  function()
+    require("lvim.core.telescope.custom-finders").find_project_files { previewer = true }
+  end,
+  "Find File",
+}

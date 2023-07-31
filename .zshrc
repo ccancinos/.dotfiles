@@ -192,6 +192,9 @@ load-nvmrc
 # export UPDATE_ZSH_DAYS=13
 ZSH_CUSTOM_AUTOUPDATE_QUIET=true
 
+# Enable vi mode
+bindkey -v
+
 # Avoid duplicates in history
 # https://unix.stackexchange.com/questions/599641/why-do-i-have-duplicates-in-my-zsh-history
 setopt HIST_EXPIRE_DUPS_FIRST
@@ -206,7 +209,7 @@ alias config='git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
 alias edit="open -a 'Rubymine 3' $1"
 alias glog="git log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --branches -- $1"
 alias gbase-branch=fgbase-branch
-alias gmove=fbmove
+alias gmove=fgmove
 alias lazyconfig='lazygit --git-dir=$HOME/.dotfiles --work-tree=$HOME'
 # Use lazygit with defined config file
 alias lazygit='CONFIG_DIR=~/.config/lazygit lazygit'
