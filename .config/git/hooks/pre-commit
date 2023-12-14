@@ -7,7 +7,8 @@
 # If any command fails, exit immediately with that command's exit status
 set -eo pipefail
 
-keywords='nocommit!\|console.log\|binding.pry'
+# keywords='nocommit!\|console.log\|binding.pry'
+keywords='nocommit!'
 if git commit -v --dry-run | grep ${keywords} >/dev/null 2>&1
 then
   echo "Trying to commit non-committable code."

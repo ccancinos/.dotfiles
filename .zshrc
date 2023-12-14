@@ -122,16 +122,17 @@ source $ZSH/oh-my-zsh.sh
 # WORK SETTINGS
 ##################################################################################################
 # Script with specific commands for Optoro project
-source ~/Optoro/code/environment/dev.sh
+# source ~/Optoro/code/environment/dev.sh
+source ~/Code/scv/internal-tools/environment/scv.sh
 
 # Add Qt to PATH
 export PATH="$PATH:~/Qt5.5.0/5.5/clang_64/bin:/usr/local/sbin"
 export PATH="/usr/local/opt/mysql@5.6/bin:$PATH"
 export PATH="/usr/local/Cellar/kubernetes-cli/1.27.1/bin:$PATH"
 
-alias python3='/usr/bin/python3'
-alias python=python3
-alias pip=pip3
+# alias python3='/usr/bin/python3'
+# alias python=python3
+# alias pip=pip3
 
 ## Google Cloud SDK
 # The next line updates PATH for the Google Cloud SDK.
@@ -217,7 +218,8 @@ alias lvim=~/.local/bin/lvim
 # Some alias taken from https://pastebin.com/raw/UWHMV2QF
 alias myip="curl http://ipecho.net/plain; echo"
 alias reload="source ~/.zshrc"
-alias runp="lsof -i "
+alias runp="lsof -i -P"
+alias ports="lsof -i -P | grep LISTEN"
 alias topten="history | commands | sort -rn | head"
 alias usage='du -h -d1'
 
@@ -228,6 +230,9 @@ function fgbase-branch() {
 
 # Move base branch to a new branch
 # Usefull when a branch from main now should extends from an intermediate branch
+# ie: If I want to move branch2 from extending branch1 to now extend develop:
+#   git rebase --onto develop branch1 branch2
+#   fmove develop branch1 branch2
 function fgmove() {
   local newBase=$1
   local currentBase=$2

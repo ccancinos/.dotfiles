@@ -200,6 +200,9 @@ lvim.builtin.treesitter.highlight.enable = true
 lvim.builtin.project.active = false
 lvim.builtin.nvimtree.setup.update_cwd = false
 lvim.builtin.nvimtree.setup.update_focused_file.update_cwd = false
+lvim.builtin.nvimtree.setup.update_focused_file.enabled = false
+lvim.builtin.nvimtree.setup.update_focused_file.update_root = false
+lvim.builtin.nvimtree.setup.view.width = 40
 
 -- Ctrl-S on insert mode changes to visual mode and saves
 lvim.keys.insert_mode["<C-s>"] = "<esc>:w<cr>"
@@ -216,6 +219,7 @@ vim.filetype.add({extension = { es6 = "javascript" }})
 
 lvim.builtin.which_key.mappings['P'] = { "<cmd>Telescope projects<CR>", "Projects" }
 lvim.builtin.which_key.mappings['sw'] = { "<cmd>Telescope grep_string<CR>", "Word" }
+lvim.builtin.which_key.mappings['br'] = { "<cmd>bufdo e<CR>", "Reload All Buffers" }
 
 -- lvim.plugins = {
 --   { 'christoomey/vim-tmux-navigator' },
