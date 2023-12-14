@@ -212,6 +212,7 @@ alias glog="git log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%
 alias gbase-branch=fgbase-branch
 alias gmove=fgmove
 alias lazyconfig='lazygit --git-dir=$HOME/.dotfiles --work-tree=$HOME'
+alias gitconfig='git --git-dir=$HOME/.dotfiles --work-tree=$HOME'
 # Use lazygit with defined config file
 alias lazygit='CONFIG_DIR=~/.config/lazygit lazygit'
 alias lvim=~/.local/bin/lvim
