@@ -123,13 +123,14 @@ source $ZSH/oh-my-zsh.sh
 ##################################################################################################
 # Script with specific commands for Optoro project
 # source ~/Optoro/code/environment/dev.sh
-source ~/Code/scv/internal-tools/environment/scv.sh
+alias dvp='source ~/.config/bin/environment/dvp.sh && main_run'
 
 # Add Qt to PATH
 export PATH="$PATH:~/Qt5.5.0/5.5/clang_64/bin:/usr/local/sbin"
 export PATH="/usr/local/opt/mysql@5.6/bin:$PATH"
 export PATH="/usr/local/Cellar/kubernetes-cli/1.27.1/bin:$PATH"
 
+alias ts="~/.config/bin/tmux-smart-sessions.sh"
 # alias python3='/usr/bin/python3'
 # alias python=python3
 # alias pip=pip3
