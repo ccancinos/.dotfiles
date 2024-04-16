@@ -9,10 +9,10 @@ export WORKSPACE=~/Code/scv/internal-tools
 export CURRENT_FILENAME=$(basename -- "$0")
 export CALLING_SCRIPT="$(dirname "$(realpath "$0")")/$CURRENT_FILENAME"
 # Internal variables
-export SCV_SCM_DIR=${SCV_WORKSPACE}/Oz/packages/cms
-export SCV_INTRANET_DIR=${SCV_WORKSPACE}/Oz/packages/intranet
-export SCV_SITE_DIR=${SCV_WORKSPACE}/Oz/packages/site
-export SCV_RESUMEBUILDER_DIR=${SCV_WORKSPACE}/Oz/packages/resume-builder
+export SCV_SCM_DIR=${WORKSPACE}/Oz/packages/cms
+export SCV_INTRANET_DIR=${WORKSPACE}/Oz/packages/intranet
+export SCV_SITE_DIR=${WORKSPACE}/Oz/packages/site
+export SCV_RESUMEBUILDER_DIR=${WORKSPACE}/Oz/packages/resume-builder
 
 
 
@@ -81,7 +81,7 @@ function install_dependencies() {
 
 function do_pull_project_repos() {
   # pull_repo avi-on-dvp main | log
-  update_repo Oz develop
+  pull_repo Oz develop
 }
 
 function do_create_intranet_secret_key() {

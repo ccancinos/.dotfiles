@@ -1,6 +1,8 @@
 os:
-  editCommand: '~/.local/bin/lvim' # as an example
-  editCommandTemplate: '{{editor}} +{{line}} -- {{filename}}'
+  edit: "~/.local/bin/lvim {{filename}}"
+  editAtLine: "~/.local/bin/lvim +{{line}} {{filename}}"
+  # editCommand: '~/.local/bin/lvim' # as an example
+  # editCommandTemplate: '{{editor}} +{{line}} -- {{filename}}'
 git:
   branchLogCmd: "git log --graph --color=always --abbrev-commit --decorate --date=relative --pretty=medium --oneline {{branchName}} --"
-notARepository: 'skip' # one of: 'prompt' | 'create' | 'skip' | 'quit'
+notARepository: "skip" # one of: 'prompt' | 'create' | 'skip' | 'quit'

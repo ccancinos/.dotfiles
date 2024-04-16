@@ -94,9 +94,10 @@ get_zoxide_results() {
 	zoxide query -l | sed -e "$HOME_REPLACER"
 }
 
-# TODO: I added this one!!! review!!! 
+# TODO: I added this one!!! review!!!
 get_find_results() {
-  find ~ -maxdepth 3 -type d 2>/dev/null
+  # find ~ -maxdepth 3 -type d 2>/dev/null
+  find ~/code/Personal ~/code/scv ~/Optoro ~/.config -maxdepth 1 -type d 2>/dev/null
 }
 
 get_fzf_results() {
@@ -111,7 +112,7 @@ get_fzf_results() {
 			;;
 		*)
 			# get_sessions_by_mru && get_zoxide_results # default shows both
-      get_find_results
+      get_sessions_by_mru && get_find_results
 			;;
 		esac
 	else

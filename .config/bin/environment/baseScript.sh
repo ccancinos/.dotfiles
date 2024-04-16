@@ -2,15 +2,14 @@
 # Alias for baseScript.sh
 # alias base='source ~/Code/scv/scv-labs/environment/splitScript/example/baseScript.sh && main_run'
 
-# TODO: Declare this variables with specific values
+# Declare this variables with specific values
 # export WORKSPACE=~/Code/scv/scv-labs/environment/splitScript/example
-export CALLING_SCRIPT=''
-# TODO: Declare this variable as is in script extension
 # export CURRENT_FILENAME=$(basename -- "$0")
 
 # Abstract variables for all scripts
-export ALIAS_NAME="${CURRENT_FILENAME%.*}"
-export CALLING_SCRIPT="$(dirname "$(realpath "$0")")/$CURRENT_FILENAME"
+# Doing this uses previous call values, moving them below
+# export ALIAS_NAME="${CURRENT_FILENAME%.*}"
+# export CALLING_SCRIPT="$(dirname "$(realpath "$0")")/$CURRENT_FILENAME"
 
 
 # =====================================
@@ -200,6 +199,12 @@ function do_docker_status() {
 }
 
 function do_print_menu() {
+  local ALIAS_NAME="${CURRENT_FILENAME%.*}"
+  local CALLING_SCRIPT="$(dirname "$(realpath "$0")")/$CURRENT_FILENAME"
+  echo ${CALLING_SCRIPT}
+  echo ${CURRENT_FILENAME}
+  echo ${ALIAS_NAME}
+
   echo -e "usage: ${YELLOW}$ALIAS_NAME${NC} ${GREEN}<command>${NC} where command is one of the following in green!!!!:"
   echo
   echo -e "${LIGHT_RED}Local${NC}"
@@ -257,7 +262,7 @@ function main_run() {
         # echo '0 means error..'
         do_print_menu
       else
-        echo 'ok..'
+        echo 'ok...'
       fi
       ;;
   esac

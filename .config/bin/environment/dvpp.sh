@@ -7,10 +7,11 @@ source ~/.config/bin/environment/baseScript.sh
 # Required for extension
 export WORKSPACE=~/Code/scv/scv-labs
 export CURRENT_FILENAME=$(basename -- "$0")
-export CALLING_SCRIPT="$(dirname "$(realpath "$0")")/$CURRENT_FILENAME"
 # Internal variables
-export DVP_FRONTEND_DIR=${WORKSPACE}/avi-on-dvp/frontend
-export DVP_SERVER_DIR=${WORKSPACE}/avi-on-dvp/server
+export POC_WORKSPACE=${WORKSPACE}/avi-on-dvp/poc
+export DVP_FRONTEND_DIR=${POC_WORKSPACE}/frontend
+export DVP_SERVER_DIR=${POC_WORKSPACE}/server
+export DVP_DOCKER_POC_PROJECT_NAME='dvp-poc'
 
 
 function do_tmux_session() {
@@ -22,24 +23,28 @@ function do_tmux_session() {
 }
 
 function do_start() {
-  createMainPane "DVP" \
+  local DOCKER_CALL="docker compose -p ${DVP_DOCKER_POC_PROJECT_NAME}"
+  createMainPane "DVP POC" \
     "Postgres" \
-    ${WORKSPACE}/avi-on-dvp \
-    "docker compose up -d; docker compose logs -f --tail 100 postgres"
+    ${POC_WORKSPACE} \
+    "${DOCKER_CALL} up -d; ${DOCKER_CALL} logs -f --tail 100 postgres"
   createCommandPane "Frontend" \
     "${DVP_FRONTEND_DIR}" \
-    "sleep 10; npm run dev"
+    "sleep 30; npm run dev"
+  createCommandPane "Localstack" \
+    ${POC_WORKSPACE} \
+    "sleep 30; ${DOCKER_CALL} up -d; ${DOCKER_CALL} logs -f --tail 100 localstack"
   createCommandPane "Backend" \
-    "${DVP_SERVER_DIR}" \
-    "sleep 10; docker compose up -d; docker compose logs -f --tail 100 server"
+    ${POC_WORKSPACE} \
+    "sleep 30; ${DOCKER_CALL} up -d; ${DOCKER_CALL} logs -f --tail 100 server"
   tmux select-layout tiled  # Call it here to call it less times
 }
 
 function do_stop() {
   sleep 1
   pgrep -f "npm run dev"|xargs kill -9
-  pushd ${WORKSPACE}/avi-on-dvp
-  docker compose stop
+  pushd ${POC_WORKSPACE}
+  docker compose -p ${DVP_DOCKER_POC_PROJECT_NAME} stop
   tmux set pane-border-status off
   tmux kill-window -t "DVP"
   popd
@@ -77,7 +82,7 @@ function do_print_sub_menu() {
 function run() {
   case $1 in
     restart|r)
-      do_stop && sleep 1 && do_start
+      do_stop && sleep 1 && install_dependencies && do_start
       ;;
     install|i)
       install_dependencies
