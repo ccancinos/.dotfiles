@@ -2,7 +2,7 @@
 # export UPDATE_ZSH_DAYS=13
 ZSH_CUSTOM_AUTOUPDATE_QUIET=true
 
-export GH_TOKEN=<ChangeMe>
+export GH_TOKEN=ChangeMe
 
 # Enable vi mode
 bindkey -v

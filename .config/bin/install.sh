@@ -1,10 +1,10 @@
-#! /bin/bash
+#!/bin/bash
 
-git clone --bare https://github.com/ccancinos/.dotfiles.git $HOME/.dotfiles
 function config() {
   git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME $@
 }
 
+git clone --bare https://github.com/ccancinos/.dotfiles.git $HOME/.dotfiles
 config checkout
 if [ $? = 0 ]; then
   echo "Checked out dotfiles.";
@@ -16,3 +16,4 @@ fi;
 config checkout
 config config --local status.showUntrackedFiles no
 chmod -R a+x ~/.config/bin/*.sh
+source ~/.zshrc
