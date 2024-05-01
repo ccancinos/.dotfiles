@@ -5,10 +5,12 @@
 source ~/.config/bin/environment/baseScript.sh
 
 # Required for extension
-export WORKSPACE=~/Code/scv/scv-labs
+# export WORKSPACE=~/Code/scv/scv-labs
+export WORKSPACE=~/Code/avi-on/dashboard-platform
 export CURRENT_FILENAME=$(basename -- "$0")
 # Internal variables
-export MVP_WORKSPACE=${WORKSPACE}/avi-on-dvp
+# export MVP_WORKSPACE=${WORKSPACE}/avi-on-dvp
+export MVP_WORKSPACE=${WORKSPACE}
 export DVP_FRONTEND_DIR=${MVP_WORKSPACE}/frontend
 export DVP_SERVER_DIR=${MVP_WORKSPACE}/server
 export DVP_DOCKER_MVP_PROJECT_NAME='dvp-mvp'
@@ -16,9 +18,9 @@ export DVP_DOCKER_MVP_PROJECT_NAME='dvp-mvp'
 
 function do_tmux_session() {
   cd $WORKSPACE
-  tmux new -s SCVDVP -n 'LunarVim'\; send-keys " lvim" ENTER \
-    \; new-window -n 'LazyGit'\; send-keys " cd avi-on-dvp && lazygit" ENTER \
-    \; new-window -n 'Terminals'\; send-keys " cd avi-on-dvp" ENTER \
+  tmux new -s 'DVP MVP' -n 'LunarVim'\; send-keys " lvim" ENTER \
+    \; new-window -n 'LazyGit'\; send-keys " lazygit" ENTER \
+    \; new-window -n 'Terminals'\
     \; select-window -t:1
 }
 
@@ -31,6 +33,9 @@ function do_start() {
   createCommandPane "Frontend" \
     "${DVP_FRONTEND_DIR}" \
     "sleep 30; npm run dev"
+  createCommandPane "Localstack" \
+    ${MVP_WORKSPACE} \
+    "sleep 5; ${DOCKER_CALL} up -d; ${DOCKER_CALL} logs -f --tail 100 localstack"
   createCommandPane "Backend" \
     ${MVP_WORKSPACE} \
     "sleep 30; ${DOCKER_CALL} up -d; ${DOCKER_CALL} logs -f --tail 30 server"
@@ -43,7 +48,7 @@ function do_stop() {
   pushd ${MVP_WORKSPACE}
   docker compose -p ${DVP_DOCKER_MVP_PROJECT_NAME} stop
   tmux set pane-border-status off
-  tmux kill-window -t "DVP"
+  tmux kill-window -t "DVP MVP"
   popd
 }
 
@@ -60,7 +65,16 @@ function install_dependencies() {
 
 function do_pull_project_repos() {
   # pull_repo avi-on-dvp main | log
-  pull_repo avi-on-dvp main
+  pull_repo '' main
+}
+
+function do_api_token() {
+  curl -sS --location 'https://api-qa.avi-on.com/sessions' \
+    --header 'Content-Type: application/json' \
+    --data-raw '{
+      "email": "claudio@scvsoft.com",
+      "password": "9876Claudio"
+    }' | tee >(jq '.') |jq -r '.credentials' | pbcopy
 }
 
 function do_print_sub_menu() {
@@ -69,6 +83,7 @@ function do_print_sub_menu() {
   echo -e "  ${GREEN}stop${NC}       - Kill all services matching ${CYAN}${DVP_SERVICES_REGEX}${NC}"
   echo -e "  ${GREEN}restart|r${NC}  - Do a stop and start"
   echo -e "  ${GREEN}install|i${NC}  - npm install on frontend and server"
+  echo -e "  ${GREEN}api_token|at${NC}  - gets api_token from avi-on"
   # echo -e "  ${GREEN}mr_status${NC}         - List status of My MRs"
   # echo -e "  ${GREEN}migrate | m${NC}       - Run database migrations. Migrates all or one of: inventory/asn/receiving/forward_orders/catalogs/units"
   # echo -e "  ${GREEN}test_clients${NC}      - Executes receiving test in Optics"
@@ -83,6 +98,9 @@ function run() {
       ;;
     install|i)
       install_dependencies
+      ;;
+    api_token|at)
+      do_api_token
       ;;
     *)
       return 1

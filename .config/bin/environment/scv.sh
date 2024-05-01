@@ -5,7 +5,7 @@
 source ~/.config/bin/environment/baseScript.sh
 
 # Required for extension
-export WORKSPACE=~/Code/scv/internal-tools
+export WORKSPACE=~/Code/scv
 export CURRENT_FILENAME=$(basename -- "$0")
 export CALLING_SCRIPT="$(dirname "$(realpath "$0")")/$CURRENT_FILENAME"
 # Internal variables

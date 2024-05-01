@@ -97,7 +97,7 @@ get_zoxide_results() {
 # TODO: I added this one!!! review!!!
 get_find_results() {
   # find ~ -maxdepth 3 -type d 2>/dev/null
-  find ~/code/Personal ~/code/scv ~/Optoro ~/.config -maxdepth 1 -type d 2>/dev/null
+  find ~/code/Personal ~/code/scv ~/code/scv-labs ~/code/avi-on ~/.config -maxdepth 1 -type d 2>/dev/null
 }
 
 get_fzf_results() {

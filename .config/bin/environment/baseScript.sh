@@ -135,19 +135,24 @@ function install_dependencies() {
 
 function pull_repo() {
   local REPO="https://github.com/scvsoft/$1.git"
+  # Get the URL used for fetching from the remote repository
+  local REPO=$(git remote -v | grep origin | grep "(fetch)" | awk '{print $2}')
   local DIR="$WORKSPACE/$1"
   local BRANCH="$2"
 
+  message "param: $1"
+  message "trying to pull from: $DIR"
   if [[ -d "$DIR" ]] ; then
     progress_message "Updating project ${LIGHT_GRAY}$1${NC} ${CYAN}to branch${NC} ${LIGHT_GRAY}$2${NC}"
     pushd ${DIR}
     git checkout ${BRANCH}
     git pull
   else
-    message "Cloning $REPO into $DIR ..."
-    pushd ${WORKSPACE}
-    git clone -b ${BRANCH} ${REPO}
-    pushd ${DIR}
+    message "Repo not found $REPO"
+    # message "Cloning $REPO into $DIR ..."
+    # pushd ${WORKSPACE}
+    # git clone -b ${BRANCH} ${REPO}
+    # pushd ${DIR}
   fi
   install_dependencies
 }
