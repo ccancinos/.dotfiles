@@ -220,6 +220,7 @@ function do_print_menu() {
   echo -e "  ${GREEN}tmuxsession${NC}       - Create tmux session with initial windows"
   echo -e "${LIGHT_RED}Docker${NC}"
   echo -e "  ${GREEN}status  | s${NC}       - Displays which docker containers are running"
+  echo -e "  ${GREEN}title${NC}             - Creates a branch title from a string replacing spaces with - and copy it to the clipboard"
   # echo -e "  ${GREEN}logs    | l${NC}       - Live tail log for a container."
   # echo -e "  ${GREEN}bash    | b${NC}       - Run bash on a container."
   # echo -e "  ${GREEN}gc${NC}                - Garbage collect (delete) unused containers and images."
@@ -243,6 +244,11 @@ function main_run() {
       ;;
     status|s)
       do_docker_status
+      ;;
+    title)
+      array="${@:2}" # Returns all args from second
+      echo "${array}" | sed -E "s/'//g; s/[&: \"]/-/g"
+      echo "${array}" | sed -E "s/'//g; s/[&: \"]/-/g" | pbcopy
       ;;
     menu)
       do_print_menu

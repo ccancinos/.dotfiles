@@ -92,6 +92,7 @@ lvim.builtin.which_key.mappings['bo'] = { "<cmd>%bd<CR><C-O>:bd#<CR>", "Close Al
 lvim.builtin.which_key.mappings['ba'] = { "<cmd>%bd<CR>", "Close All" }
 -- lvim.builtin.which_key.mappings['ba'] = { "<cmd>%bw<CR>", "Close All" }
 lvim.builtin.which_key.mappings['bx'] = { "<cmd>!chmod +x %<CR>", "Make Executable" }
+lvim.builtin.which_key.mappings['bd'] = { "<cmd>:windo diffthis<CR>", "Diff opened tabs" }
 -- Redefine to show preview when pressing <leader>f
 -- Example using builtin telescope https://github.com/pytholic/pytholic-lvim/blob/main/lua/user/telescope.lua
 -- local builtin = require("telescope.builtin")
@@ -151,12 +152,13 @@ formatters.setup {
     -- filetypes = { "javascript", "typescript", "javascriptreact", "typescriptreact", "css", "json", "markdown", "scss", "yaml", "html" },
   },
 }
--- lvim.format_on_save.enabled = true
--- lvim.format_on_save.timeout = 5000
+lvim.format_on_save.enabled = true
+lvim.format_on_save.timeout = 5000
+
 -- Define a keybinding for formatting only the selected range
--- lvim.builtin.which_key.mappings["j"] = "<cmd>lua require('lvim.lsp.buf.formatting').format()<CR>"
+lvim.builtin.which_key.mappings["j"] = "<cmd>lua require('lvim.lsp.buf.formatting').format()<CR>"
 -- Define a keybinding for formatting only the selected range
--- lvim.keys.normal_mode["<leader>j"] = "<cmd>require('lvim.lsp.buf.formatting').format()<CR>"
+lvim.keys.normal_mode["<leader>j"] = "<cmd>require('lvim.lsp.buf.formatting').format()<CR>"
 --
 
 -- This is because Vue integration brakes in Volar 2.0.7
@@ -169,4 +171,3 @@ require("lvim.lsp.manager").setup("volar", {
     },
   },
 })
-

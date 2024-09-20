@@ -3,6 +3,8 @@
   email = ccancinos@users.sourceforge.net
 [push]
   default = current
+; [pull]
+;   rebase = true
 [color]
   ui = true
 [color "diff"]
@@ -12,6 +14,12 @@
   hooksPath = ~/.config/git/hooks
 
 [includeIf "gitdir:~/Code/scv/"]
+  path = ~/.config/git/scv/.gitconfig
+
+[includeIf "gitdir:~/Code/scv-labs/"]
+  path = ~/.config/git/scv/.gitconfig
+
+[includeIf "gitdir:~/Code/avi-on/"]
   path = ~/.config/git/scv/.gitconfig
 
 [includeIf "gitdir:~/Optoro/code/"]
